@@ -1,14 +1,25 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
-import './index.css';
-import App from './App';
-import * as serviceWorker from './serviceWorker';
+import React from "react";
+import ReactDOM from "react-dom";
+import "./index.css";
+import App from "./App";
+import * as serviceWorker from "./serviceWorker";
+import { onPatch } from "mobx-state-tree";
+import makeInspectable from "mobx-devtools-mst";
+import Invoice from "./models/Invoice";
+
+const invoice = Invoice.create({ currency: "USD" });
+
+onPatch(invoice, patch => {
+  console.log(patch);
+});
+
+makeInspectable(invoice);
 
 ReactDOM.render(
   <React.StrictMode>
-    <App />
+    <App invoice={invoice} />
   </React.StrictMode>,
-  document.getElementById('root')
+  document.getElementById("root")
 );
 
 // If you want your app to work offline and load faster, you can change
